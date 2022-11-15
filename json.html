@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function fetchAPI() {
+            return fetch('https://api.odcloud.kr/api/15031811/v1/uddi:7c4234ed-87ea-4af6-87f6-e21c6fee1722_202003311035?page=1&perPage=10&serviceKey=data-portal-test-key')
+            .then((response) =>  response.json())
+            .then((data) => data);
+        }  
+
+        fetchAPI().then((datas) => {
+            console.log(datas.data);
+            showDatas(datas.data);
+        });
+
+        function showDatas(datas) {
+            const ulElement = document.querySelector('#json');
+            ulElement.innerHTML = datas.map((data) => setLiElement(data)).join('');
+        }
+
+        function setLiElement(data) {
+            return `
+            <th>읍면동</th>
+            <th>기러기</th>
+            <th>돼지</th>
+            <th>사슴</th>
+            <th>산란계</th>
+            <th>염소</th>
+            <th>육계</th>
+            <th>육우</th>
+            <th>한우</th>
+        <tr>
+            <td>${data.읍면동}</td>
+            <td>${data.기러기}</td>
+            <td>${data.돼지}</td>
+            <td>${data.사슴}</td>
+            <td>${data.산란계}</td>
+            <td>${data.염소}</td>
+            <td>${data.육계}</td>
+            <td>${data.육우}</td>
+            <td>${data.한우}</td>
+        </tr>
+            `;
+        }
+    </script>
+</head>
+<body>
+    <h2>경상남도 통영시 축산농장정보</h2>
+    <table id="json" border="1">
+    </table>
+</body>
+</html>
